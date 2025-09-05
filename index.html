@@ -1,0 +1,1311 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新高考3+1+2模式 - 高校专业选课指南</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#10b981',
+                        accent: '#f59e0b',
+                        dark: '#1e293b',
+                        light: '#f8fafc'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-custom {
+                transition: all 0.3s ease;
+            }
+            .skeleton {
+                background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+                background-size: 200% 100%;
+                animation: loading 1.5s infinite;
+            }
+            @keyframes loading {
+                0% { background-position: 200% 0; }
+                100% { background-position: -200% 0; }
+            }
+            .modal-backdrop {
+                backdrop-filter: blur(4px);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+    <!-- 导航栏 -->
+    <header class="sticky top-0 z-50 bg-white shadow-md transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-graduation-cap text-primary text-2xl"></i>
+                <h1 class="text-xl font-bold text-dark">新高考指南</h1>
+            </div>
+            
+            <!-- 桌面导航 -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="font-medium hover:text-primary transition-custom">首页</a>
+                <a href="#universities" class="font-medium hover:text-primary transition-custom">高校</a>
+                <a href="#majors" class="font-medium hover:text-primary transition-custom">专业</a>
+                <a href="#course-selection" class="font-medium hover:text-primary transition-custom">选课组合</a>
+                <a href="#difficulty" class="font-medium hover:text-primary transition-custom">难度分析</a>
+                <a href="#tools" class="font-medium hover:text-primary transition-custom">查询工具</a>
+            </nav>
+            
+            <!-- 移动端菜单按钮 -->
+            <button class="md:hidden text-gray-600 focus:outline-none" id="menu-toggle">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div class="md:hidden hidden bg-white shadow-lg absolute w-full" id="mobile-menu">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#home" class="py-2 font-medium hover:text-primary transition-custom">首页</a>
+                <a href="#universities" class="py-2 font-medium hover:text-primary transition-custom">高校</a>
+                <a href="#majors" class="py-2 font-medium hover:text-primary transition-custom">专业</a>
+                <a href="#course-selection" class="py-2 font-medium hover:text-primary transition-custom">选课组合</a>
+                <a href="#difficulty" class="py-2 font-medium hover:text-primary transition-custom">难度分析</a>
+                <a href="#tools" class="py-2 font-medium hover:text-primary transition-custom">查询工具</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section id="home" class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 text-shadow">新高考3+1+2模式指南</h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">探索全国高校、专业及最佳选课组合，为你的未来做好规划</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#tools" class="bg-white text-primary font-semibold px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-custom transform hover:-translate-y-1">
+                        开始查询 <i class="fa fa-search ml-2"></i>
+                    </a>
+                    <a href="#course-selection" class="bg-transparent border-2 border-white text-white font-semibold px-6 py-3 rounded-lg hover:bg-white/10 transition-custom transform hover:-translate-y-1">
+                        了解选课组合 <i class="fa fa-clipboard-check ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3+1+2模式解释 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">什么是"3+1+2"模式？</h2>
+                <p class="text-gray-600">新高考改革后的主要考试模式，为学生提供了更多选择空间</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-blue-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border-t-4 border-primary">
+                    <div class="text-primary text-4xl mb-4">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">"3" - 必考科目</h3>
+                    <p class="text-gray-600">语文、数学、外语三门必考科目，每科满分150分</p>
+                </div>
+                
+                <div class="bg-green-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border-t-4 border-secondary">
+                    <div class="text-secondary text-4xl mb-4">
+                        <i class="fa fa-check-circle"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">"1" - 首选科目</h3>
+                    <p class="text-gray-600">从物理和历史中选择1门，满分100分，以原始分计入总分</p>
+                </div>
+                
+                <div class="bg-amber-50 rounded-xl p-6 shadow-sm hover:shadow-md transition-custom border-t-4 border-accent">
+                    <div class="text-accent text-4xl mb-4">
+                        <i class="fa fa-th-large"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">"2" - 再选科目</h3>
+                    <p class="text-gray-600">从化学、生物、思想政治、地理中选择2门，满分各100分，以等级分计入总分</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 高校列表部分 -->
+    <section id="universities" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">全国高校</h2>
+                <p class="text-gray-600">按类别浏览全国主要高校，了解其特色专业及选课要求</p>
+            </div>
+            
+            <!-- 高校分类标签 -->
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <button class="university-filter bg-primary text-white px-4 py-2 rounded-full text-sm font-medium">全部高校</button>
+                <button class="university-filter bg-white text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-custom">综合类</button>
+                <button class="university-filter bg-white text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-custom">理工类</button>
+                <button class="university-filter bg-white text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-custom">文史类</button>
+                <button class="university-filter bg-white text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-custom">医药类</button>
+                <button class="university-filter bg-white text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-custom">农林类</button>
+                <button class="university-filter bg-white text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-primary hover:text-white transition-custom">艺术类</button>
+            </div>
+            
+            <!-- 高校列表 -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto" id="universities-grid">
+                <!-- 高校卡片 1 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-custom transform hover:-translate-y-1">
+                    <div class="h-40 bg-gray-200 relative">
+                        <img src="https://picsum.photos/id/24/600/400" alt="北京大学教学楼" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">综合类</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold mb-1">北京大学</h3>
+                        <p class="text-gray-500 text-sm mb-3">北京市 · 985/211</p>
+                        <p class="text-gray-600 text-sm mb-4">以文理医工见长，综合性研究型大学，在多个学科领域处于国内领先地位。</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">数学</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">物理</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">文学</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">医学</span>
+                        </div>
+                        <a href="#" class="text-primary font-medium text-sm inline-flex items-center hover:underline">
+                            查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 高校卡片 2 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-custom transform hover:-translate-y-1">
+                    <div class="h-40 bg-gray-200 relative">
+                        <img src="https://picsum.photos/id/25/600/400" alt="清华大学教学楼" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">理工类</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold mb-1">清华大学</h3>
+                        <p class="text-gray-500 text-sm mb-3">北京市 · 985/211</p>
+                        <p class="text-gray-600 text-sm mb-4">以工科见长，兼顾理科、文科和医学，是中国著名的高等学府。</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">计算机</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">电子</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">建筑</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">机械</span>
+                        </div>
+                        <a href="#" class="text-primary font-medium text-sm inline-flex items-center hover:underline">
+                            查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 高校卡片 3 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-custom transform hover:-translate-y-1">
+                    <div class="h-40 bg-gray-200 relative">
+                        <img src="https://picsum.photos/id/26/600/400" alt="复旦大学教学楼" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">综合类</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold mb-1">复旦大学</h3>
+                        <p class="text-gray-500 text-sm mb-3">上海市 · 985/211</p>
+                        <p class="text-gray-600 text-sm mb-4">文理医工多学科发展，是华东地区重要的高等教育中心。</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">新闻</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">数学</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">医学</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">经济</span>
+                        </div>
+                        <a href="#" class="text-primary font-medium text-sm inline-flex items-center hover:underline">
+                            查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 高校卡片 4 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-custom transform hover:-translate-y-1">
+                    <div class="h-40 bg-gray-200 relative">
+                        <img src="https://picsum.photos/id/96/600/400" alt="上海交通大学教学楼" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">综合类</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold mb-1">上海交通大学</h3>
+                        <p class="text-gray-500 text-sm mb-3">上海市 · 985/211</p>
+                        <p class="text-gray-600 text-sm mb-4">工科和医学实力雄厚，近年来在文科领域也有显著发展。</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">工科</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">医学</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">船舶</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">管理</span>
+                        </div>
+                        <a href="#" class="text-primary font-medium text-sm inline-flex items-center hover:underline">
+                            查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 高校卡片 5 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-custom transform hover:-translate-y-1">
+                    <div class="h-40 bg-gray-200 relative">
+                        <img src="https://picsum.photos/id/91/600/400" alt="浙江大学教学楼" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">综合类</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold mb-1">浙江大学</h3>
+                        <p class="text-gray-500 text-sm mb-3">浙江省 · 985/211</p>
+                        <p class="text-gray-600 text-sm mb-4">学科门类齐全，在农业、工程、医学等领域具有优势。</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">农业</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">工程</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">计算机</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">医学</span>
+                        </div>
+                        <a href="#" class="text-primary font-medium text-sm inline-flex items-center hover:underline">
+                            查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 高校卡片 6 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-custom transform hover:-translate-y-1">
+                    <div class="h-40 bg-gray-200 relative">
+                        <img src="https://picsum.photos/id/180/600/400" alt="中国人民大学教学楼" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">文史类</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold mb-1">中国人民大学</h3>
+                        <p class="text-gray-500 text-sm mb-3">北京市 · 985/211</p>
+                        <p class="text-gray-600 text-sm mb-4">以人文社会科学为主，在法学、经济学、管理学等领域享有盛誉。</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">法学</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">经济</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">管理</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">新闻</span>
+                        </div>
+                        <a href="#" class="text-primary font-medium text-sm inline-flex items-center hover:underline">
+                            查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 查看更多按钮 -->
+            <div class="text-center mt-10">
+                <button id="load-more-universities" class="bg-white border border-primary text-primary font-medium px-6 py-3 rounded-lg hover:bg-primary hover:text-white transition-custom" data-page="1">
+                    查看更多高校 <i class="fa fa-chevron-down ml-2"></i>
+                </button>
+                <!-- 加载中状态 (默认隐藏) -->
+                <div id="loading-indicator" class="hidden mt-6">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                    <p class="mt-2 text-gray-600">正在加载更多高校...</p>
+                </div>
+                <!-- 没有更多内容提示 (默认隐藏) -->
+                <div id="no-more-content" class="hidden mt-6 text-gray-600">
+                    已显示全部高校
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 专业分类部分 -->
+    <section id="majors" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">专业分类与选课要求</h2>
+                <p class="text-gray-600">了解不同专业类别及其对选课的要求，为你的选择提供参考</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- 专业类别 1 -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hover:shadow-md transition-custom">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-primary mr-4">
+                            <i class="fa fa-laptop text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">理工类专业</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">包括计算机科学、电子信息、机械工程、土木工程等专业。</p>
+                    <div class="mb-4">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-2">典型选课要求：</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">必选物理</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">化学/生物</span>
+                        </div>
+                    </div>
+                    <a href="#" class="text-primary text-sm font-medium hover:underline">查看具体专业 →</a>
+                </div>
+                
+                <!-- 专业类别 2 -->
+                <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-6 border border-green-100 hover:shadow-md transition-custom">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-secondary mr-4">
+                            <i class="fa fa-flask text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">医药类专业</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">包括临床医学、药学、护理学、生物医学工程等专业。</p>
+                    <div class="mb-4">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-2">典型选课要求：</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">物理/历史</span>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">必选化学</span>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">必选生物</span>
+                        </div>
+                    </div>
+                    <a href="#" class="text-secondary text-sm font-medium hover:underline">查看具体专业 →</a>
+                </div>
+                
+                <!-- 专业类别 3 -->
+                <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-6 border border-amber-100 hover:shadow-md transition-custom">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-accent mr-4">
+                            <i class="fa fa-balance-scale text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">文史类专业</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">包括汉语言文学、历史学、哲学、法学、新闻传播学等专业。</p>
+                    <div class="mb-4">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-2">典型选课要求：</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded">必选历史</span>
+                            <span class="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded">政治/地理</span>
+                        </div>
+                    </div>
+                    <a href="#" class="text-accent text-sm font-medium hover:underline">查看具体专业 →</a>
+                </div>
+                
+                <!-- 专业类别 4 -->
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100 hover:shadow-md transition-custom">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 mr-4">
+                            <i class="fa fa-line-chart text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">经济管理类</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">包括经济学、金融学、会计学、工商管理、市场营销等专业。</p>
+                    <div class="mb-4">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-2">典型选课要求：</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">物理/历史</span>
+                            <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">不限选</span>
+                        </div>
+                    </div>
+                    <a href="#" class="text-purple-600 text-sm font-medium hover:underline">查看具体专业 →</a>
+                </div>
+                
+                <!-- 专业类别 5 -->
+                <div class="bg-gradient-to-br from-red-50 to-rose-50 rounded-xl p-6 border border-red-100 hover:shadow-md transition-custom">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-600 mr-4">
+                            <i class="fa fa-paint-brush text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">艺术类专业</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">包括音乐学、美术学、设计学、戏剧影视文学等专业。</p>
+                    <div class="mb-4">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-2">典型选课要求：</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">物理/历史</span>
+                            <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded">不限选</span>
+                        </div>
+                    </div>
+                    <a href="#" class="text-red-600 text-sm font-medium hover:underline">查看具体专业 →</a>
+                </div>
+                
+                <!-- 专业类别 6 -->
+                <div class="bg-gradient-to-br from-cyan-50 to-sky-50 rounded-xl p-6 border border-cyan-100 hover:shadow-md transition-custom">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-600 mr-4">
+                            <i class="fa fa-leaf text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">农林类专业</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">包括农学、林学、植物保护、动物科学、环境科学等专业。</p>
+                    <div class="mb-4">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-2">典型选课要求：</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-cyan-100 text-cyan-800 text-xs px-2 py-1 rounded">物理/历史</span>
+                            <span class="bg-cyan-100 text-cyan-800 text-xs px-2 py-1 rounded">化学/生物</span>
+                        </div>
+                    </div>
+                    <a href="#" class="text-cyan-600 text-sm font-medium hover:underline">查看具体专业 →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 选课组合部分 -->
+    <section id="course-selection" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">常见选课组合分析</h2>
+                <p class="text-gray-600">了解不同选课组合的优势、适用专业及适合人群</p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto">
+                <!-- 选课组合比较表 -->
+                <div class="overflow-x-auto bg-white rounded-xl shadow-md mb-12">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-100 text-left">
+                                <th class="px-6 py-4 font-semibold">选课组合</th>
+                                <th class="px-6 py-4 font-semibold">优势</th>
+                                <th class="px-6 py-4 font-semibold">适用专业</th>
+                                <th class="px-6 py-4 font-semibold">适合人群</th>
+                                <th class="px-6 py-4 font-semibold">专业覆盖率</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50 transition-custom">
+                                <td class="px-6 py-4 font-medium">物理+化学+生物</td>
+                                <td class="px-6 py-4 text-sm">理科基础扎实，专业选择面广</td>
+                                <td class="px-6 py-4 text-sm">理工类、医药类、农林类</td>
+                                <td class="px-6 py-4 text-sm">理科成绩优异，逻辑思维强</td>
+                                <td class="px-6 py-4 text-sm text-green-600 font-medium">96%</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition-custom">
+                                <td class="px-6 py-4 font-medium">物理+化学+地理</td>
+                                <td class="px-6 py-4 text-sm">兼顾理科和部分文科思维</td>
+                                <td class="px-6 py-4 text-sm">理工类、环境科学、地理科学</td>
+                                <td class="px-6 py-4 text-sm">理科较好，对地理感兴趣</td>
+                                <td class="px-6 py-4 text-sm text-green-600 font-medium">92%</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition-custom">
+                                <td class="px-6 py-4 font-medium">物理+生物+地理</td>
+                                <td class="px-6 py-4 text-sm">学习难度相对较低</td>
+                                <td class="px-6 py-4 text-sm">部分理工类、生物科学、环境类</td>
+                                <td class="px-6 py-4 text-sm">理科中等，不擅长化学</td>
+                                <td class="px-6 py-4 text-sm text-yellow-600 font-medium">78%</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition-custom">
+                                <td class="px-6 py-4 font-medium">历史+政治+地理</td>
+                                <td class="px-6 py-4 text-sm">文科思维连贯，记忆内容多</td>
+                                <td class="px-6 py-4 text-sm">文史类、法学、管理学部分专业</td>
+                                <td class="px-6 py-4 text-sm">文科成绩优异，擅长记忆</td>
+                                <td class="px-6 py-4 text-sm text-yellow-600 font-medium">65%</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition-custom">
+                                <td class="px-6 py-4 font-medium">历史+政治+生物</td>
+                                <td class="px-6 py-4 text-sm">兼顾文科和部分理科</td>
+                                <td class="px-6 py-4 text-sm">文史类、部分医学、农学</td>
+                                <td class="px-6 py-4 text-sm">文科较好，对生物感兴趣</td>
+                                <td class="px-6 py-4 text-sm text-yellow-600 font-medium">60%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 选课建议 -->
+                <div class="bg-white rounded-xl p-6 shadow-md">
+                    <h3 class="text-2xl font-bold mb-4">选课建议</h3>
+                    <ul class="space-y-4">
+                        <li class="flex">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-3 mt-0.5">
+                                <i class="fa fa-check text-primary text-xs"></i>
+                            </div>
+                            <p class="text-gray-700">结合个人兴趣和特长，选择自己擅长且感兴趣的科目</p>
+                        </li>
+                        <li class="flex">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-3 mt-0.5">
+                                <i class="fa fa-check text-primary text-xs"></i>
+                            </div>
+                            <p class="text-gray-700">考虑未来职业规划和目标专业的选课要求</p>
+                        </li>
+                        <li class="flex">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-3 mt-0.5">
+                                <i class="fa fa-check text-primary text-xs"></i>
+                            </div>
+                            <p class="text-gray-700">了解各科目的学习难度和赋分情况，合理搭配</p>
+                        </li>
+                        <li class="flex">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-3 mt-0.5">
+                                <i class="fa fa-check text-primary text-xs"></i>
+                            </div>
+                            <p class="text-gray-700">不要盲目跟风，适合别人的选课组合不一定适合自己</p>
+                        </li>
+                        <li class="flex">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center mr-3 mt-0.5">
+                                <i class="fa fa-check text-primary text-xs"></i>
+                            </div>
+                            <p class="text-gray-700">与老师、家长和学长交流，获取更多选课经验</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 难度分析部分 -->
+    <section id="difficulty" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">科目难度分析</h2>
+                <p class="text-gray-600">各科目学习难度、得分情况及选考人数分析</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- 难度雷达图 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">科目难度评估</h3>
+                    <div class="h-80">
+                        <canvas id="difficultyChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- 选考人数柱状图 -->
+                <div class="bg-gray-50 rounded-xl p-6 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">选考人数比例</h3>
+                    <div class="h-80">
+                        <canvas id="selectionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 科目详细分析 -->
+            <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-10">
+                <!-- 物理 -->
+                <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-bold text-lg">物理</h4>
+                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full">难度高</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">逻辑性强，对抽象思维要求高，学习难度大，但专业选择面广。</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fa fa-users mr-2"></i>
+                        <span>选考比例：约35%</span>
+                    </div>
+                </div>
+                
+                <!-- 历史 -->
+                <div class="bg-amber-50 rounded-xl p-5 border border-amber-100">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-bold text-lg">历史</h4>
+                        <span class="bg-yellow-100 text-yellow-600 text-xs px-2 py-1 rounded-full">难度中</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">需要大量记忆，对理解分析能力要求高，适合文科见长的学生。</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fa fa-users mr-2"></i>
+                        <span>选考比例：约40%</span>
+                    </div>
+                </div>
+                
+                <!-- 化学 -->
+                <div class="bg-green-50 rounded-xl p-5 border border-green-100">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-bold text-lg">化学</h4>
+                        <span class="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full">难度高</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">知识点多且杂，需要记忆与理解结合，理科属性强。</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fa fa-users mr-2"></i>
+                        <span>选考比例：约30%</span>
+                    </div>
+                </div>
+                
+                <!-- 生物 -->
+                <div class="bg-purple-50 rounded-xl p-5 border border-purple-100">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-bold text-lg">生物</h4>
+                        <span class="bg-yellow-100 text-yellow-600 text-xs px-2 py-1 rounded-full">难度中</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">知识点多但系统性强，偏文科性质的理科，记忆内容较多。</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fa fa-users mr-2"></i>
+                        <span>选考比例：约45%</span>
+                    </div>
+                </div>
+                
+                <!-- 政治 -->
+                <div class="bg-red-50 rounded-xl p-5 border border-red-100">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-bold text-lg">政治</h4>
+                        <span class="bg-yellow-100 text-yellow-600 text-xs px-2 py-1 rounded-full">难度中</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">紧跟时事，需要理解与记忆结合，得分区分度较大。</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fa fa-users mr-2"></i>
+                        <span>选考比例：约25%</span>
+                    </div>
+                </div>
+                
+                <!-- 地理 -->
+                <div class="bg-cyan-50 rounded-xl p-5 border border-cyan-100">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-bold text-lg">地理</h4>
+                        <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">难度低</span>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-3">兼具文科和理科特点，难度相对较低，得分较容易。</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fa fa-users mr-2"></i>
+                        <span>选考比例：约50%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 查询工具部分 -->
+    <section id="tools" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">选课查询工具</h2>
+                <p class="text-gray-600">根据你的选课组合，查询可报考的专业和院校</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
+                <h3 class="text-xl font-bold mb-6 text-center">选择你的科目</h3>
+                
+                <form id="course-form" class="space-y-6">
+                    <!-- 首选科目 -->
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-3">首选科目（必选其一）</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="cursor-pointer">
+                                <div class="border-2 border-gray-200 hover:border-primary rounded-lg p-4 transition-custom flex items-center space-x-3">
+                                    <input type="radio" name="first-choice" value="物理" class="w-5 h-5 text-primary focus:ring-primary">
+                                    <span class="font-medium">物理</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <div class="border-2 border-gray-200 hover:border-primary rounded-lg p-4 transition-custom flex items-center space-x-3">
+                                    <input type="radio" name="first-choice" value="历史" class="w-5 h-5 text-primary focus:ring-primary">
+                                    <span class="font-medium">历史</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 再选科目 -->
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-3">再选科目（选择其二）</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <label class="cursor-pointer">
+                                <div class="border-2 border-gray-200 hover:border-primary rounded-lg p-4 transition-custom flex items-center space-x-3">
+                                    <input type="checkbox" name="second-choice" value="化学" class="w-5 h-5 text-primary focus:ring-primary">
+                                    <span class="font-medium">化学</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <div class="border-2 border-gray-200 hover:border-primary rounded-lg p-4 transition-custom flex items-center space-x-3">
+                                    <input type="checkbox" name="second-choice" value="生物" class="w-5 h-5 text-primary focus:ring-primary">
+                                    <span class="font-medium">生物</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <div class="border-2 border-gray-200 hover:border-primary rounded-lg p-4 transition-custom flex items-center space-x-3">
+                                    <input type="checkbox" name="second-choice" value="政治" class="w-5 h-5 text-primary focus:ring-primary">
+                                    <span class="font-medium">政治</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <div class="border-2 border-gray-200 hover:border-primary rounded-lg p-4 transition-custom flex items-center space-x-3">
+                                    <input type="checkbox" name="second-choice" value="地理" class="w-5 h-5 text-primary focus:ring-primary">
+                                    <span class="font-medium">地理</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- 专业倾向 -->
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-3">专业倾向（可选）</label>
+                        <select class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value="">不限制</option>
+                            <option value="理工类">理工类</option>
+                            <option value="文史类">文史类</option>
+                            <option value="医药类">医药类</option>
+                            <option value="经济管理类">经济管理类</option>
+                            <option value="艺术类">艺术类</option>
+                            <option value="农林类">农林类</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 查询按钮 -->
+                    <button type="button" id="query-btn" class="w-full bg-primary text-white font-semibold py-3 px-6 rounded-lg hover:bg-primary/90 transition-custom transform hover:-translate-y-1">
+                        查询可报专业和院校 <i class="fa fa-search ml-2"></i>
+                    </button>
+                </form>
+                
+                <!-- 查询结果 -->
+                <div id="results" class="mt-8 hidden">
+                    <h4 class="font-bold text-lg mb-4">查询结果</h4>
+                    <div class="p-4 bg-blue-50 rounded-lg border border-blue-100 mb-4">
+                        <p class="text-gray-700 font-medium mb-2">你的选课组合：<span id="selected-courses" class="text-primary"></span></p>
+                        <p class="text-gray-600 text-sm">专业覆盖率：<span class="font-medium text-green-600">约85%</span></p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5 class="font-semibold text-gray-800 mb-2">推荐专业类别：</h5>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">计算机类</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">电子信息类</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">自动化类</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">环境科学类</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">地理科学类</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h5 class="font-semibold text-gray-800 mb-2">推荐院校（部分）：</h5>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i class="fa fa-university text-primary mr-2"></i>
+                                <span>清华大学、北京大学、浙江大学</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fa fa-university text-primary mr-2"></i>
+                                <span>上海交通大学、南京大学、哈尔滨工业大学</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-6 text-center">
+                        <a href="#" class="text-primary font-medium hover:underline" id="view-full-list">查看完整列表 <i class="fa fa-arrow-right ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 完整列表浮窗 -->
+    <div id="full-list-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <!-- 背景遮罩 -->
+        <div class="absolute inset-0 bg-black bg-opacity-50 modal-backdrop" id="modal-backdrop"></div>
+        
+        <!-- 浮窗内容 -->
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col relative z-10 transform transition-all duration-300 scale-95 opacity-0" id="modal-content">
+            <!-- 关闭按钮 -->
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-custom z-20">
+                <i class="fa fa-times text-xl"></i>
+            </button>
+            
+            <!-- 浮窗标题 -->
+            <div class="bg-primary text-white p-6">
+                <h3 class="text-2xl font-bold" id="modal-title">完整推荐列表</h3>
+                <p class="text-white/80 text-sm mt-1" id="modal-subtitle">基于你的选课组合：物理+化学+地理</p>
+            </div>
+            
+            <!-- 浮窗内容区域 -->
+            <div class="flex-1 overflow-y-auto p-6">
+                <!-- 专业列表 -->
+                <div class="mb-8">
+                    <h4 class="text-xl font-bold mb-4 pb-2 border-b border-gray-200">推荐专业类别</h4>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h5 class="font-semibold text-primary mb-2">计算机类</h5>
+                            <ul class="text-sm text-gray-700 space-y-1 ml-5 list-disc">
+                                <li>计算机科学与技术</li>
+                                <li>软件工程</li>
+                                <li>人工智能</li>
+                                <li>数据科学与大数据技术</li>
+                                <li>网络工程</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h5 class="font-semibold text-primary mb-2">电子信息类</h5>
+                            <ul class="text-sm text-gray-700 space-y-1 ml-5 list-disc">
+                                <li>电子信息工程</li>
+                                <li>通信工程</li>
+                                <li>微电子科学与工程</li>
+                                <li>光电信息科学与工程</li>
+                                <li>信息工程</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h5 class="font-semibold text-primary mb-2">自动化类</h5>
+                            <ul class="text-sm text-gray-700 space-y-1 ml-5 list-disc">
+                                <li>自动化</li>
+                                <li>机器人工程</li>
+                                <li>智能装备与系统</li>
+                                <li>智能制造工程</li>
+                                <li>测控技术与仪器</li>
+                            </ul>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h5 class="font-semibold text-primary mb-2">环境科学与地理类</h5>
+                            <ul class="text-sm text-gray-700 space-y-1 ml-5 list-disc">
+                                <li>环境科学</li>
+                                <li>环境工程</li>
+                                <li>地理科学</li>
+                                <li>地理信息科学</li>
+                                <li>水文与水资源工程</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 院校列表 -->
+                <div>
+                    <h4 class="text-xl font-bold mb-4 pb-2 border-b border-gray-200">推荐院校</h4>
+                    
+                    <!-- 985/211院校 -->
+                    <div class="mb-6">
+                        <h5 class="font-semibold text-gray-800 mb-3">985/211院校</h5>
+                        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">清华大学</p>
+                                <p class="text-xs text-gray-500">北京市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">北京大学</p>
+                                <p class="text-xs text-gray-500">北京市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">浙江大学</p>
+                                <p class="text-xs text-gray-500">浙江省杭州市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">上海交通大学</p>
+                                <p class="text-xs text-gray-500">上海市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">南京大学</p>
+                                <p class="text-xs text-gray-500">江苏省南京市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">哈尔滨工业大学</p>
+                                <p class="text-xs text-gray-500">黑龙江省哈尔滨市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">华中科技大学</p>
+                                <p class="text-xs text-gray-500">湖北省武汉市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">中山大学</p>
+                                <p class="text-xs text-gray-500">广东省广州市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">西安交通大学</p>
+                                <p class="text-xs text-gray-500">陕西省西安市</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 其他重点院校 -->
+                    <div>
+                        <h5 class="font-semibold text-gray-800 mb-3">其他重点院校</h5>
+                        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">北京邮电大学</p>
+                                <p class="text-xs text-gray-500">北京市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">南京理工大学</p>
+                                <p class="text-xs text-gray-500">江苏省南京市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">华南理工大学</p>
+                                <p class="text-xs text-gray-500">广东省广州市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">电子科技大学</p>
+                                <p class="text-xs text-gray-500">四川省成都市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">南京邮电大学</p>
+                                <p class="text-xs text-gray-500">江苏省南京市</p>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-3 hover:border-primary hover:shadow-sm transition-custom">
+                                <p class="font-medium">杭州电子科技大学</p>
+                                <p class="text-xs text-gray-500">浙江省杭州市</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 浮窗底部 -->
+            <div class="bg-gray-50 p-4 border-t border-gray-200 flex justify-end">
+                <button id="close-modal-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded-lg transition-custom">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fa fa-graduation-cap text-primary text-2xl"></i>
+                        <h3 class="text-xl font-bold">新高考指南</h3>
+                    </div>
+                    <p class="text-gray-400 text-sm">为新高考学生提供全面的高校、专业及选课信息，助力升学规划。</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">快速链接</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#home" class="hover:text-primary transition-custom">首页</a></li>
+                        <li><a href="#universities" class="hover:text-primary transition-custom">高校</a></li>
+                        <li><a href="#majors" class="hover:text-primary transition-custom">专业</a></li>
+                        <li><a href="#course-selection" class="hover:text-primary transition-custom">选课组合</a></li>
+                        <li><a href="#tools" class="hover:text-primary transition-custom">查询工具</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">相关资源</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition-custom">高考政策解读</a></li>
+                        <li><a href="#" class="hover:text-primary transition-custom">历年录取数据</a></li>
+                        <li><a href="#" class="hover:text-primary transition-custom">志愿填报指南</a></li>
+                        <li><a href="#" class="hover:text-primary transition-custom">职业规划测评</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">联系我</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope mr-2 text-primary"></i>
+                            <a href="mailto:3777945852@qq.com" class="hover:text-primary transition-custom">3777945852@qq.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-phone mr-2 text-primary"></i>
+                            <span>QQ:3777945852</span>
+                        </li>
+                    </ul>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-custom text-xl"><i class="fa fa-weibo"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-custom text-xl"><i class="fa fa-wechat"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-custom text-xl"><i class="fa fa-qq"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>© 2023 新高考指南 版权所有 | 高考信息仅供参考，具体请以官方发布为准</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2', 'shadow-lg');
+                navbar.classList.remove('py-3', 'shadow-md');
+            } else {
+                navbar.classList.add('py-3', 'shadow-md');
+                navbar.classList.remove('py-2', 'shadow-lg');
+            }
+        });
+        
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动菜单
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+        
+        // 科目难度雷达图
+        const difficultyCtx = document.getElementById('difficultyChart').getContext('2d');
+        const difficultyChart = new Chart(difficultyCtx, {
+            type: 'radar',
+            data: {
+                labels: ['物理', '历史', '化学', '生物', '政治', '地理'],
+                datasets: [{
+                    label: '学习难度',
+                    data: [9, 7, 8.5, 6.5, 7, 5],
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(59, 130, 246, 1)'
+                }, {
+                    label: '得分难度',
+                    data: [8.5, 7.5, 8, 7, 8, 6],
+                    backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                    borderColor: 'rgba(245, 158, 11, 1)',
+                    pointBackgroundColor: 'rgba(245, 158, 11, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(245, 158, 11, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: true
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 10
+                    }
+                }
+            }
+        });
+        
+        // 选考人数柱状图
+        const selectionCtx = document.getElementById('selectionChart').getContext('2d');
+        const selectionChart = new Chart(selectionCtx, {
+            type: 'bar',
+            data: {
+                labels: ['物理', '历史', '化学', '生物', '政治', '地理'],
+                datasets: [{
+                    label: '选考人数比例 (%)',
+                    data: [35, 40, 30, 45, 25, 50],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(245, 158, 11, 0.7)',
+                        'rgba(16, 185, 129, 0.7)',
+                        'rgba(139, 92, 246, 0.7)',
+                        'rgba(239, 68, 68, 0.7)',
+                        'rgba(6, 182, 212, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(245, 158, 11, 1)',
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(139, 92, 246, 1)',
+                        'rgba(239, 68, 68, 1)',
+                        'rgba(6, 182, 212, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 60,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // 查询按钮功能
+        document.getElementById('query-btn').addEventListener('click', function() {
+            // 获取选中的首选科目
+            const firstChoice = document.querySelector('input[name="first-choice"]:checked');
+            // 获取选中的再选科目
+            const secondChoices = document.querySelectorAll('input[name="second-choice"]:checked');
+            
+            // 验证选择
+            if (!firstChoice) {
+                alert('请选择首选科目');
+                return;
+            }
+            
+            if (secondChoices.length !== 2) {
+                alert('请选择两门再选科目');
+                return;
+            }
+            
+            // 显示结果
+            const selectedCoursesText = `${firstChoice.value} + ${Array.from(secondChoices).map(c => c.value).join(' + ')}`;
+            document.getElementById('selected-courses').textContent = selectedCoursesText;
+            document.getElementById('results').classList.remove('hidden');
+            
+            // 更新浮窗中的选课组合信息
+            document.getElementById('modal-subtitle').textContent = `基于你的选课组合：${selectedCoursesText}`;
+            
+            // 滚动到结果
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        
+        // 高校筛选功能
+        const filterButtons = document.querySelectorAll('.university-filter');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // 移除所有按钮的活跃状态
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-white', 'text-gray-700');
+                });
+                
+                // 设置当前按钮为活跃状态
+                this.classList.remove('bg-white', 'text-gray-700');
+                this.classList.add('bg-primary', 'text-white');
+                
+                // 这里可以添加实际筛选逻辑
+                console.log('筛选：' + this.textContent);
+            });
+        });
+
+        // 查看更多高校功能
+        document.getElementById('load-more-universities').addEventListener('click', function() {
+            const button = this;
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const noMoreContent = document.getElementById('no-more-content');
+            const universitiesGrid = document.getElementById('universities-grid');
+            
+            // 获取当前页码
+            let currentPage = parseInt(button.getAttribute('data-page'));
+            
+            // 显示加载状态，隐藏按钮
+            button.classList.add('hidden');
+            loadingIndicator.classList.remove('hidden');
+            
+            // 模拟API请求延迟
+            setTimeout(() => {
+                // 模拟更多高校数据
+                const moreUniversities = [
+                    {
+                        name: '南京大学',
+                        location: '江苏省 · 985/211',
+                        type: '综合类',
+                        description: '文理见长，工科实力强劲，是中国南方重要的高等教育中心。',
+                        majors: ['物理', '化学', '文学', '计算机'],
+                        imageId: 119
+                    },
+                    {
+                        name: '武汉大学',
+                        location: '湖北省 · 985/211',
+                        type: '综合类',
+                        description: '学科门类齐全，在水利、测绘、法学等领域具有优势。',
+                        majors: ['水利', '测绘', '法学', '经济学'],
+                        imageId: 129
+                    },
+                    {
+                        name: '中山大学',
+                        location: '广东省 · 985/211',
+                        type: '综合类',
+                        description: '华南地区著名高校，医学、商科等学科实力突出。',
+                        majors: ['医学', '商科', '生物学', '环境科学'],
+                        imageId: 139
+                    }
+                ];
+                
+                // 添加新的高校卡片
+                moreUniversities.forEach(university => {
+                    const universityCard = document.createElement('div');
+                    universityCard.className = 'bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-custom transform hover:-translate-y-1 opacity-0 translate-y-4';
+                    universityCard.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    
+                    // 构建专业标签HTML
+                    let majorsHtml = '';
+                    university.majors.forEach(major => {
+                        majorsHtml += `<span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">${major}</span>`;
+                    });
+                    
+                    universityCard.innerHTML = `
+                        <div class="h-40 bg-gray-200 relative">
+                            <img src="https://picsum.photos/id/${university.imageId}/600/400" alt="${university.name}教学楼" class="w-full h-full object-cover">
+                            <div class="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">${university.type}</div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-xl font-bold mb-1">${university.name}</h3>
+                            <p class="text-gray-500 text-sm mb-3">${university.location}</p>
+                            <p class="text-gray-600 text-sm mb-4">${university.description}</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                ${majorsHtml}
+                            </div>
+                            <a href="#" class="text-primary font-medium text-sm inline-flex items-center hover:underline">
+                                查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    `;
+                    
+                    universitiesGrid.appendChild(universityCard);
+                    
+                    // 触发动画
+                    setTimeout(() => {
+                        universityCard.classList.remove('opacity-0', 'translate-y-4');
+                    }, 50);
+                });
+                
+                // 更新页码
+                currentPage++;
+                button.setAttribute('data-page', currentPage);
+                
+                // 隐藏加载状态
+                loadingIndicator.classList.add('hidden');
+                
+                // 如果是最后一页，显示"没有更多内容"，否则显示按钮
+                if (currentPage >= 3) { // 假设总共只有3页数据
+                    noMoreContent.classList.remove('hidden');
+                } else {
+                    button.classList.remove('hidden');
+                }
+            }, 1500); // 1.5秒加载时间
+        });
+
+        // 浮窗相关功能
+        const modal = document.getElementById('full-list-modal');
+        const modalContent = document.getElementById('modal-content');
+        const viewFullListBtn = document.getElementById('view-full-list');
+        const closeModalBtn = document.getElementById('close-modal');
+        const closeModalBtn2 = document.getElementById('close-modal-btn');
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        
+        // 打开浮窗
+        function openModal() {
+            modal.classList.remove('hidden');
+            // 触发动画
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+            // 阻止背景滚动
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 关闭浮窗
+        function closeModal() {
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            // 完全隐藏模态框
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                // 恢复背景滚动
+                document.body.style.overflow = '';
+            }, 300);
+        }
+        
+        // 点击查看完整列表按钮打开浮窗
+        viewFullListBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openModal();
+        });
+        
+        // 关闭按钮关闭浮窗
+        closeModalBtn.addEventListener('click', closeModal);
+        closeModalBtn2.addEventListener('click', closeModal);
+        
+        // 点击背景关闭浮窗
+        modalBackdrop.addEventListener('click', closeModal);
+        
+        // 按ESC键关闭浮窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    </script>
+    </body></html>
